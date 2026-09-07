@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تحميل تطبيق رقيب للبرمجة والتسويق الرقمي | تنزيل أندرويد APK</title>
+  <meta name="description" content="حمّل تطبيق رقيب للبرمجة والتسويق الرقمي لهواتف أندرويد. حلول متكاملة لفك الرمز، استعادة البيانات، تعريب الأجهزة، تفعيل 3G/4G، والتسويق الإلكتروني.">
+  <link rel="icon" href="icon.jpg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0A0F1D;
+      --surface-dark: #121A2F;
+      --surface-card: #18223C;
+      --surface-border: #233154;
+      --emerald: #10B981;
+      --emerald-light: #34D399;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --teal: #14B8A6;
+      --orange: #F97316;
+      --text-white: #FFFFFF;
+      --text-slate: #94A3B8;
+      --text-muted: #64748B;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Ambient lighting */
+    .glow-top {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(20, 184, 166, 0.08) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 30px 0 10px;
+    }
+
+    .logo-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .logo-img {
+      width: 90px;
+      height: 90px;
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 25px var(--emerald-glow);
+      border: 2px solid var(--emerald);
+      object-fit: cover;
+    }
+
+    .app-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text-white);
+      margin-bottom: 4px;
+    }
+
+    .app-title span {
+      color: var(--emerald-light);
+    }
+
+    .app-subtitle {
+      font-size: 14px;
+      color: var(--text-slate);
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    /* Main Download Card */
+    .download-card {
+      background: linear-gradient(180deg, var(--surface-card) 0%, var(--surface-dark) 100%);
+      border: 1px solid var(--surface-border);
+      border-radius: 24px;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge-direct {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--emerald);
+      color: var(--emerald-light);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+    }
+
+    .download-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #0A0F1D;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 16px 28px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
+      transition: all 0.25s ease;
+      margin: 10px auto 14px;
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(16, 185, 129, 0.5);
+      background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+    }
+
+    .download-btn svg {
+      width: 26px;
+      height: 26px;
+      fill: currentColor;
+    }
+
+    .meta-info {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      font-size: 12px;
+      color: var(--text-slate);
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .meta-item span {
+      color: var(--text-white);
+      font-weight: 700;
+    }
+
+    /* Instructions / Steps */
+    .section-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin: 24px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--emerald-light);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .step-box {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 16px 14px;
+      text-align: center;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald-light);
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      border: 1px solid var(--emerald);
+    }
+
+    .step-text {
+      font-size: 13px;
+      color: var(--text-slate);
+      line-height: 1.5;
+    }
+
+    .step-text strong {
+      color: var(--text-white);
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    /* Features Card */
+    .feature-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(20, 184, 166, 0.15);
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 20px;
+      border: 1px solid rgba(20, 184, 166, 0.3);
+    }
+
+    .feature-details h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 3px;
+    }
+
+    .feature-details p {
+      font-size: 12px;
+      color: var(--text-slate);
+    }
+
+    /* Owner & WhatsApp Support */
+    .support-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%);
+      border: 1px solid var(--emerald);
+      border-radius: 20px;
+      padding: 22px;
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .support-card h3 {
+      font-size: 16px;
+      color: var(--text-white);
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .support-card p {
+      font-size: 13px;
+      color: var(--text-slate);
+      margin-bottom: 16px;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #25D366;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 24px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .whatsapp-btn:hover {
+      background: #20BA5A;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-top"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo-wrapper">
+        <img src="icon.jpg" alt="شعار تطبيق رقيب" class="logo-img">
+      </div>
+      <h1 class="app-title">مركز <span>رقيب</span> للبرمجة والتسويق</h1>
+      <p class="app-subtitle">تطبيق أندرويد المتكامل لحلول الهواتف الذكية وخدمات التسويق الرقمي</p>
+    </header>
+
+    <!-- Main Download Section -->
+    <div class="download-card">
+      <span class="badge-direct">نسخة أندرويد الأصلية المباشرة (APK)</span>
+      <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">تنزيل التطبيق على هاتفك</h2>
+      <p style="font-size: 13px; color: var(--text-slate); margin-bottom: 18px;">
+        اضغط على الزر أدناه لتنزيل ملف التثبيت المباشر على هاتفك المحمول بصيغة APK.
+      </p>
+
+      <a href="raqeeb-app.apk" download="raqeeb-app.apk" class="download-btn">
+        <svg viewBox="0 0 24 24">
+          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+        </svg>
+        تحميل التطبيق الآن (APK مباشر)
+      </a>
+
+      <div class="meta-info">
+        <div class="meta-item">حجم الملف: <span>24 ميجابايت</span></div>
+        <div class="meta-item">•</div>
+        <div class="meta-item">نظام التشغيل: <span>Android 8.0 فما فوق</span></div>
+        <div class="meta-item">•</div>
+        <div class="meta-item">الإصدار: <span>v1.0.0 أحدث إصدار</span></div>
+      </div>
+    </div>
+
+    <!-- Quick How-To Steps -->
+    <div class="section-title">
+      <span>⚙️</span>
+      خطوات التثبيت السريعة على هاتف أندرويد
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-box">
+        <div class="step-number">1</div>
+        <div class="step-text">
+          <strong>اضغط تحميل</strong>
+          حمّل ملف raqeeb-app.apk من الزر أعلاه على هاتفك.
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-number">2</div>
+        <div class="step-text">
+          <strong>السماح بالتثبيت</strong>
+          عند ظهور رسالة المصادر غير المعروفة اضغط على (السماح / Install).
+        </div>
+      </div>
+      <div class="step-box">
+        <div class="step-number">3</div>
+        <div class="step-text">
+          <strong>تسجيل الدخول والاشتراك</strong>
+          أدخل اسمك ورقمك ونوع مشكلتك وأرسل الإشعار للرقم 773557771 لدخول التطبيق.
+        </div>
+      </div>
+    </div>
+
+    <!-- App Highlights -->
+    <div class="section-title">
+      <span>🛠️</span>
+      أبرز خدمات تطبيق رقيب للبرمجة
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔓</div>
+      <div class="feature-details">
+        <h4>حلول رمز القفل وفك الشفرات وحسابات FRP</h4>
+        <p>إرشادات ومحاكاة عملية لتجاوز رمز الشاشة المفقود، وتخطي حسابات جوجل معتمدة لمختلف أنواع الهواتف.</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📡</div>
+      <div class="feature-details">
+        <h4>تفعيل وضبط بيانات 3G / 4G لكافة الشبكات</h4>
+        <p>إعدادات وتوليد ملفات نقاط الوصول APN لشبكات يمن موبايل، سبأفون، يو، وواي بضغطة زر واحدة.</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">💾</div>
+      <div class="feature-details">
+        <h4>استرجاع الصور والملفات المحذوفة</h4>
+        <p>فاحص متطور لفحص الذاكرة الداخلية واسترداد الصور والوسائط المحذوفة ورفع تقارير للمختبر.</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🚀</div>
+      <div class="feature-details">
+        <h4>خدمات التسويق الرقمي وإدارة الحملات</h4>
+        <p>باقات ترويجية وإعلانات ممولة على فيسبوك وإنستغرام وتيك توك لتكبير نشاطك التجاري.</p>
+      </div>
+    </div>
+
+    <!-- Owner Support & WhatsApp -->
+    <div class="support-card">
+      <h3>تواصل مباشر مع مالك التطبيق</h3>
+      <p>للمساعدة في التثبيت، سداد رسوم الاشتراك (2000 ريال يمني / حساب الكريمي 3001845477)، أو طلب خدمة فورية:</p>
+      <a href="https://wa.me/967773557771?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%85%D8%B1%D9%83%D8%B2%20%D8%B1%D9%82%D9%8A%D8%A8%D8%8C%20%D9%82%D9%85%D8%AA%20%D8%A8%D8%AA%D8%AD%D9%85%D9%8A%D9%84%20%D8%A7%D9%84%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D9%88%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AA%D9%81%D8%B9%D9%8A%D9%84%20%D8%A7%D9%84%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83." target="_blank" class="whatsapp-btn">
+        💬 مراسلة مالك التطبيق عبر واتساب (773557771)
+      </a>
+    </div>
+
+    <footer>
+      جميع الحقوق محفوظة © مركز رقيب للبرمجة والتسويق الرقمي 2026 | رقم التواصل: 773557771
+    </footer>
+  </div>
+</body>
+</html>

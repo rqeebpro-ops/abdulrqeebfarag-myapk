@@ -1,0 +1,6 @@
+{
+  "name": "رقيب للبرمجة والتسويق",
+  "description": "تطبيق رقيب للبرمجة والتسويق لحلول مشاكل الهواتف الذكية، فك الشفرات والإقفال، استرجاع الحسابات والبيانات، تعريب الأجهزة، تفعيل 3G/4G، وخدمات التسويق الرقمي المتكاملة.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
