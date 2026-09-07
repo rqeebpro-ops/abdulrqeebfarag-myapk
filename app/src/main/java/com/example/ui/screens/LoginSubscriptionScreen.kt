@@ -1,5 +1,10 @@
 package com.example.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,7 +40,11 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Payment
 import androidx.compose.material.icons.filled.PhoneAndroid
@@ -344,12 +353,29 @@ fun LoginSubscriptionScreen(
                     }
 
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = if (isGateMode) "بوابة تسجيل الدخول والاشتراك" else "تسجيل الدخول والاشتراك بالخدمة",
-                            fontSize = 17.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = TextWhite
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(
+                                text = if (isGateMode) "بوابة تسجيل الدخول والاشتراك" else "تسجيل الدخول والاشتراك بالخدمة",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = TextWhite
+                            )
+                            Surface(
+                                shape = RoundedCornerShape(6.dp),
+                                color = EmeraldContainer
+                            ) {
+                                Text(
+                                    text = "v2.1.0",
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = EmeraldPrimary,
+                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                )
+                            }
+                        }
                         Spacer(modifier = Modifier.height(3.dp))
                         Text(
                             text = "للدخول إلى خدمات التطبيق، يرجى تعبئة بياناتك وإرسال إشعار الاشتراك للمالك على 773557771",
@@ -1077,7 +1103,7 @@ fun LoginSubscriptionScreen(
             }
         }
 
-        // Section 3: Electronic Wallets & Transfer Channels (المحافظ الإلكترونية وطرق السداد المعتمدة)
+        // Section 3: Electronic Wallets & Transfer Channels (المحافظ الإلكترونية وطرق السداد المعتمدة - قائمة منسدلة)
         item {
             Card(
                 shape = RoundedCornerShape(20.dp),
@@ -1108,7 +1134,7 @@ fun LoginSubscriptionScreen(
                             )
                         }
                         Text(
-                            text = "3. المحافظ الإلكترونية والحسابات المعتمدة",
+                            text = "3. المحافظ الإلكترونية والحسابات المعتمدة (قائمة منسدلة)",
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
                             color = TextWhite
@@ -1116,125 +1142,240 @@ fun LoginSubscriptionScreen(
                     }
 
                     Text(
-                        text = "اختر المحفظة الإلكترونية من القائمة المنسدلة أو عبر النقر على أيقونات المحافظ أدناه:",
+                        text = "اضغط على القائمة المنسدلة أدناه لاختيار المحفظة وعرض ونسخ رقم الحساب المعتمد:",
                         fontSize = 12.sp,
                         color = TextSlate
                     )
 
-                    // 1. Quick Wallet Icon Selector Cards (أيقونات المحافظ الإلكترونية)
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    // Master Dropdown Header / Trigger Card (كرت القائمة المنسدلة الرئيسي)
+                    Surface(
+                        shape = RoundedCornerShape(14.dp),
+                        color = ImmersiveSurfaceVariant,
+                        border = BorderStroke(1.dp, if (isWalletDropdownExpanded) AccentBlue else DarkButtonBorder),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { isWalletDropdownExpanded = !isWalletDropdownExpanded }
                     ) {
-                        paymentChannels.forEach { channel ->
-                            val isSelected = selectedPaymentChannel.id == channel.id
-                            Surface(
-                                shape = RoundedCornerShape(12.dp),
-                                color = if (isSelected) ImmersiveSurfaceVariant else DarkButtonBg,
-                                border = BorderStroke(
-                                    1.dp,
-                                    if (isSelected) AccentBlue else DarkButtonBorder
-                                ),
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clickable { selectedPaymentChannel = channel }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(14.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                modifier = Modifier.weight(1f)
                             ) {
-                                Column(
-                                    modifier = Modifier.padding(vertical = 10.dp, horizontal = 2.dp),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                                Box(
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .clip(CircleShape)
+                                        .background(AccentBlueContainer),
+                                    contentAlignment = Alignment.Center
                                 ) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(36.dp)
-                                            .clip(CircleShape)
-                                            .background(if (isSelected) AccentBlueContainer else ImmersiveSurface),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Icon(
-                                            imageVector = getWalletIcon(channel.id),
-                                            contentDescription = channel.name,
-                                            tint = if (isSelected) AccentBlue else TextSlate,
-                                            modifier = Modifier.size(20.dp)
-                                        )
-                                    }
-                                    Text(
-                                        text = getWalletShortName(channel.id),
-                                        fontSize = 11.sp,
-                                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                        color = if (isSelected) TextWhite else TextSlate,
-                                        maxLines = 1
+                                    Icon(
+                                        imageVector = getWalletIcon(selectedPaymentChannel.id),
+                                        contentDescription = null,
+                                        tint = AccentBlue,
+                                        modifier = Modifier.size(22.dp)
                                     )
                                 }
+                                Column {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                                    ) {
+                                        Text(
+                                            text = selectedPaymentChannel.name,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 14.sp,
+                                            color = TextWhite
+                                        )
+                                        Surface(
+                                            shape = RoundedCornerShape(6.dp),
+                                            color = ImmersiveSurface
+                                        ) {
+                                            Text(
+                                                text = selectedPaymentChannel.badge,
+                                                fontSize = 9.sp,
+                                                color = TextSlate,
+                                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                            )
+                                        }
+                                    }
+                                    Text(
+                                        text = "${selectedPaymentChannel.typeLabel}: ${selectedPaymentChannel.accountOrPhone}",
+                                        fontSize = 12.sp,
+                                        color = TextWhite,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                }
+                            }
+
+                            // Expand / Collapse Indicator
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(if (isWalletDropdownExpanded) AccentBlue.copy(alpha = 0.2f) else DarkButtonBg)
+                                    .padding(horizontal = 10.dp, vertical = 6.dp)
+                            ) {
+                                Text(
+                                    text = if (isWalletDropdownExpanded) "إغلاق" else "القائمة المنسدلة",
+                                    fontSize = 11.sp,
+                                    color = if (isWalletDropdownExpanded) AccentBlue else TextWhite,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Icon(
+                                    imageVector = if (isWalletDropdownExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                    contentDescription = null,
+                                    tint = if (isWalletDropdownExpanded) AccentBlue else TextWhite,
+                                    modifier = Modifier.size(18.dp)
+                                )
                             }
                         }
                     }
 
-                    // 2. Dropdown Menu for Wallets (القائمة المنسدلة للمحافظ الإلكترونية)
-                    ExposedDropdownMenuBox(
-                        expanded = isWalletDropdownExpanded,
-                        onExpandedChange = { isWalletDropdownExpanded = it }
+                    // Animated Dropdown List (محتوى القائمة المنسدلة عند الفتح)
+                    AnimatedVisibility(
+                        visible = isWalletDropdownExpanded,
+                        enter = expandVertically() + fadeIn(),
+                        exit = shrinkVertically() + fadeOut()
                     ) {
-                        OutlinedTextField(
-                            value = selectedPaymentChannel.name,
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text("المحفظة أو الحساب المختار", color = TextSlate) },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = getWalletIcon(selectedPaymentChannel.id),
-                                    contentDescription = null,
-                                    tint = AccentBlue
-                                )
-                            },
-                            trailingIcon = {
-                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = isWalletDropdownExpanded)
-                            },
-                            colors = walletTextFieldColors,
-                            shape = RoundedCornerShape(14.dp),
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .menuAnchor()
-                        )
-
-                        ExposedDropdownMenu(
-                            expanded = isWalletDropdownExpanded,
-                            onDismissRequest = { isWalletDropdownExpanded = false },
-                            modifier = Modifier.background(ImmersiveSurfaceCard)
+                                .clip(RoundedCornerShape(14.dp))
+                                .background(ImmersiveSurface)
+                                .border(1.dp, ImmersiveBorderSubtle, RoundedCornerShape(14.dp))
+                                .padding(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(6.dp)
                         ) {
+                            Text(
+                                text = "اختر المحفظة المطلوبة من الحسابات الرسمية المعتمدة أدناه:",
+                                fontSize = 11.sp,
+                                color = TextSlate,
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            )
+
                             paymentChannels.forEach { channel ->
-                                val isChosen = selectedPaymentChannel.id == channel.id
-                                DropdownMenuItem(
-                                    leadingIcon = {
-                                        Icon(
-                                            imageVector = getWalletIcon(channel.id),
-                                            contentDescription = null,
-                                            tint = if (isChosen) AccentBlue else TextSlate
-                                        )
-                                    },
-                                    text = {
-                                        Column {
-                                            Text(
-                                                text = channel.name,
-                                                color = TextWhite,
-                                                fontWeight = if (isChosen) FontWeight.Bold else FontWeight.Normal,
-                                                fontSize = 13.sp
-                                            )
-                                            Text(
-                                                text = "${channel.typeLabel}: ${channel.accountOrPhone}",
-                                                color = TextSlate,
-                                                fontSize = 11.sp
-                                            )
+                                val isSelected = selectedPaymentChannel.id == channel.id
+                                Surface(
+                                    shape = RoundedCornerShape(10.dp),
+                                    color = if (isSelected) ImmersiveSurfaceVariant else Color.Transparent,
+                                    border = BorderStroke(
+                                        1.dp,
+                                        if (isSelected) AccentBlue else Color.Transparent
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            selectedPaymentChannel = channel
+                                            isWalletDropdownExpanded = false
                                         }
-                                    },
-                                    onClick = {
-                                        selectedPaymentChannel = channel
-                                        isWalletDropdownExpanded = false
-                                    },
-                                    modifier = Modifier.background(
-                                        if (isChosen) ImmersiveSurfaceVariant else Color.Transparent
-                                    )
-                                )
+                                ) {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 12.dp, vertical = 10.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                            modifier = Modifier.weight(1f)
+                                        ) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .size(34.dp)
+                                                    .clip(CircleShape)
+                                                    .background(if (isSelected) AccentBlueContainer else DarkButtonBg),
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                Icon(
+                                                    imageVector = getWalletIcon(channel.id),
+                                                    contentDescription = null,
+                                                    tint = if (isSelected) AccentBlue else TextSlate,
+                                                    modifier = Modifier.size(18.dp)
+                                                )
+                                            }
+                                            Column {
+                                                Row(
+                                                    verticalAlignment = Alignment.CenterVertically,
+                                                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                                                ) {
+                                                    Text(
+                                                        text = channel.name,
+                                                        fontSize = 13.sp,
+                                                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                                                        color = TextWhite
+                                                    )
+                                                    Text(
+                                                        text = "(${channel.badge})",
+                                                        fontSize = 10.sp,
+                                                        color = TextSlate
+                                                    )
+                                                }
+                                                Text(
+                                                    text = "${channel.typeLabel}: ${channel.accountOrPhone}",
+                                                    fontSize = 12.sp,
+                                                    color = TextWhite,
+                                                    fontWeight = FontWeight.SemiBold
+                                                )
+                                            }
+                                        }
+
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                                        ) {
+                                            if (isSelected) {
+                                                Surface(
+                                                    shape = RoundedCornerShape(6.dp),
+                                                    color = AccentBlueContainer
+                                                ) {
+                                                    Text(
+                                                        text = "محدد ✓",
+                                                        fontSize = 10.sp,
+                                                        fontWeight = FontWeight.Bold,
+                                                        color = AccentBlue,
+                                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                                    )
+                                                }
+                                            }
+
+                                            OutlinedButton(
+                                                onClick = {
+                                                    AppIntentUtils.copyToClipboard(
+                                                        context,
+                                                        channel.name,
+                                                        channel.accountOrPhone
+                                                    )
+                                                },
+                                                shape = RoundedCornerShape(8.dp),
+                                                border = BorderStroke(1.dp, DarkButtonBorder),
+                                                colors = ButtonDefaults.outlinedButtonColors(
+                                                    containerColor = DarkButtonBg,
+                                                    contentColor = TextWhite
+                                                ),
+                                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.ContentCopy,
+                                                    contentDescription = null,
+                                                    modifier = Modifier.size(12.dp),
+                                                    tint = TextWhite
+                                                )
+                                                Spacer(modifier = Modifier.width(3.dp))
+                                                Text("نسخ", fontSize = 10.sp, color = TextWhite)
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
